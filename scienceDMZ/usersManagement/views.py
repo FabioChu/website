@@ -1,6 +1,7 @@
 from django.shortcuts import render, render_to_response, RequestContext, HttpResponseRedirect
 from django.contrib import messages
 from .forms import UserProfileForm, UserForm
+from django.contrib.auth import authenticate, login, logout
 
 # Create your views here.
 
@@ -20,8 +21,34 @@ def register(request):
 		profile = profile_form.save(commit=False)
 		profile.user = user
 		profile.save()
-		messages.success(request, 'Profile created.')
+		return HttpResponseRedirect('/main/')
 
 	return render_to_response("register.html", 
                                 locals(), 
                                 context_instance=RequestContext(request))
+
+def user_login(request):
+	if request.method == 'POST':
+
+		username = request.POST['username']
+		password = request.POST['password']
+
+		user = authenticate(username=username, password=password)
+
+		if user:
+			login(request, user)
+			return HttpResponseRedirect('/main/')
+		else:
+			messages.info(request,"Invalid login details: {0}, {1}".format(username, password))
+
+	return render_to_response("main.html", 
+							locals(), 
+							context_instance=RequestContext(request))
+
+def user_logout(request):
+	logout(request)
+	print 'oi'
+	return HttpResponseRedirect('/main/')
+	return render_to_response("main.html", 
+							locals(), 
+							context_instance=RequestContext(request))
