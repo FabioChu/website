@@ -47,7 +47,6 @@ def user_login(request):
 
 def user_logout(request):
 	logout(request)
-	#oi
 	return HttpResponseRedirect('/main/')
 	return render_to_response("main.html", 
 							locals(), 
