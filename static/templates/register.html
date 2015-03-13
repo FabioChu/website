@@ -1,0 +1,17 @@
+<html>
+    <head>
+        <title>ScienceDMZ</title>
+    </head>
+    <body>
+        <h2>Register</h2>
+        <form action="/main/" method="POST">{% csrf_token %}
+            <table>
+            {{ user_form.as_table }}
+            {{ profile_form.as_table }}
+            </table>
+        <p>
+            <input type="submit" value="Submit" />
+        </p>
+        </form>
+    </body>
+</html>
