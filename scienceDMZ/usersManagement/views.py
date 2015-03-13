@@ -20,7 +20,7 @@ def register(request):
 		profile = profile_form.save(commit=False)
 		profile.user = user
 		profile.save()
-		return HttpResponseRedirect('/main/')
+		messages.success(request, 'Profile created.')
 
 	return render_to_response("register.html", 
                                 locals(), 
