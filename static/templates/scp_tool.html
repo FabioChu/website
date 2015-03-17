@@ -1,0 +1,28 @@
+<html>
+    <head>
+        <title>ScienceDMZ</title>
+    </head>
+    <body>
+        <h2>SCP measure tool</h2>
+            {% if messages %}
+                <ul class="messages">
+                    {% for message in messages %}
+                    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% if user.is_authenticated %}    
+            <form action="" method="POST">{% csrf_token %}
+                <table>
+                {{ scp_form.as_table }}
+                </table>
+            <p>
+                <input type="submit" value="SCP"/>
+            </p>
+            </form>
+        {% else %}
+           <p>Welcome, new user. Please log in.</p>
+           <a href='/main'>Log in</a>
+        {% endif %}
+    </body>
+</html>
