@@ -1,6 +1,7 @@
 #!/usr/bin/python
 
 import subprocess, re, sys, time, csv, os
+from measureTools.models import Scp
 
 def executa_scp(cmd):
 	p = subprocess.Popen(cmd,shell=True,stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
@@ -22,11 +23,13 @@ def tamanho_em_bits(tamanho):
 	else:
 		return 0
 
-def criarCsvGridftp(path_arquivo_csv,data,velocidade):
+def criarCsvGridftp(path_arquivo_csv,data,velocidade,tamanho):
  	c = csv.writer(open(path_arquivo_csv,"a"))
 	if (os.stat(path_arquivo_csv).st_size == 0):
 		c.writerow(['data','velocidade'])
 	c.writerow([data,velocidade])
+	s = Scp(data=data ,velocidade=velocidade, tamanho=tamanho)
+	s.save()
 
 def scpTool(ip_remoto,tamanho,limite,pasta_ori,pasta_des,pasta_resultado):
 	tipo     = "scp"
@@ -34,8 +37,9 @@ def scpTool(ip_remoto,tamanho,limite,pasta_ori,pasta_des,pasta_resultado):
 	data     = time.strftime('%d/%m/%Y')
 
 	print "\nCriando pasta remota para envio de arquivos ...\n"
-
+	
 	cmd_ssh = "if [ ! -d " + pasta_des + "/" + tamanho + " ] ; then mkdir -p " + pasta_des + "/" + tamanho + " ; fi"
+
 	subprocess.check_call(['ssh',usuario + "@" + ip_remoto,cmd_ssh])
 
 	print "\nCriando pasta local para os resultados ...\n"
@@ -58,7 +62,7 @@ def scpTool(ip_remoto,tamanho,limite,pasta_ori,pasta_des,pasta_resultado):
 	tempo = re.findall(regex_tempo,lista_tempo[0])
 	velocidade = tamanho_em_bits(tamanho)/float(tempo[len(tempo) - 1])
 	velocidade = str(float('{0:.2f}'.format(velocidade))) + " Mb/s"
-	criarCsvGridftp(path_arquivo_csv,data,velocidade)
+	criarCsvGridftp(path_arquivo_csv,data,velocidade,tamanho)
 
 	print "\nRemovendo o arquivo remoto\n"
 

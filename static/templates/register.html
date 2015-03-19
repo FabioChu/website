@@ -1,8 +1,5 @@
-<html>
-    <head>
-        <title>ScienceDMZ</title>
-    </head>
-    <body>
+{% extends "base.html" %}
+{% block content %}
         <h2>Register</h2>
             {% if messages %}
                 <ul class="messages">
@@ -20,5 +17,4 @@
             <input type="submit" value="Submit" value="register"/>
         </p>
         </form>
-    </body>
-</html>
+{% endblock %}

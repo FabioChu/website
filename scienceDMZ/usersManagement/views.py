@@ -5,8 +5,8 @@ from django.contrib.auth import authenticate, login, logout
 
 # Create your views here.
 
-def main(request):
-	return render_to_response("main.html", 
+def home(request):
+	return render_to_response("home.html", 
                                 locals(), 
                                 context_instance=RequestContext(request))
 
@@ -21,7 +21,7 @@ def register(request):
 		profile = profile_form.save(commit=False)
 		profile.user = user
 		profile.save()
-		return HttpResponseRedirect('/main/')
+		return HttpResponseRedirect('/')
 
 	return render_to_response("register.html", 
                                 locals(), 
@@ -37,17 +37,17 @@ def user_login(request):
 
 		if user:
 			login(request, user)
-			return HttpResponseRedirect('/main/')
+			return HttpResponseRedirect('/')
 		else:
 			messages.info(request,"Invalid login details: {0}, {1}".format(username, password))
 
-	return render_to_response("main.html", 
+	return render_to_response("home.html", 
 							locals(), 
 							context_instance=RequestContext(request))
 
 def user_logout(request):
 	logout(request)
-	return HttpResponseRedirect('/main/')
-	return render_to_response("main.html", 
+	return HttpResponseRedirect('/')
+	return render_to_response("home.html", 
 							locals(), 
 							context_instance=RequestContext(request))

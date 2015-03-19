@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
-        <h2>SCP measure tool</h2>
+        <h2>WGET tool</h2>
             {% if messages %}
                 <ul class="messages">
                     {% for message in messages %}
@@ -11,10 +11,10 @@
         {% if user.is_authenticated %}    
             <form action="" method="POST">{% csrf_token %}
                 <table>
-                {{ scp_form.as_table }}
+                {{ wget_form.as_table }}
                 </table>
             <p>
-                <input type="submit" value="SCP"/>
+                <input type="submit" value="wget"/>
             </p>
             </form>
         {% else %}

@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+	{% block content %}
+		<h2>SCP entries</h2>
+		<table style="width:100%">
+			<tr>
+				<th>Date</th>
+   				<th>Size</th>
+    			<th>Speed</th>
+  			</tr>
+			{% for data_scp in scp_all_entries %}
+				<tr>
+	            	<th>{{ data_scp.data }}</th>
+	            	<th>{{ data_scp.tamanho }}</th>
+	            	<th>{{ data_scp.velocidade }}</th>
+	            </tr>
+	        {% endfor %}
+        </table>
+	{% endblock %}
